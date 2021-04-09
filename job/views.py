@@ -20,7 +20,7 @@ class AllJobViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = AllJobsSerializer
     permission_classes = [permissions.IsAuthenticated, SubscribedUser]
 
-    def list(self, request, *args, **kwargs):
+    def retrieve(self, request, *args, **kwargs):
         queryset = self.queryset.filter(approved=True).order_by('-date')
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -38,13 +38,16 @@ class JobRecruiterViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner, SubscribedUser]
 
     def list(self, request, *args, **kwargs):
-        user = User.objects.get(id=request.user.id)
+        try:
+            user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return Response({"DOES_NOT_EXIST": "User Does not exist"}, status=400)
+
         queryset = self.queryset.filter(user=user).order_by('-date')
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
     def perform_create(self, serializer, *args, **kwargs):
-
         serializer.save(user=self.request.user)
 
 
@@ -57,12 +60,16 @@ class JobSeekerViewSet(viewsets.ModelViewSet):
     filterset_class = ViewJobFilter
 
     def list(self, request, *args, **kwargs):
-        user = User.objects.get(id=request.user.id)
+        try:
+            user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return Response({"DOES_NOT_EXIST": "User Does not exist"}, status=400)
         queryset = self.queryset.filter(user=user).order_by('-date')
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
     def create(self, request, *args, **kwargs):
+
         job = JobSeeker.objects.filter(user=self.request.user, job=self.request.data['job'], applied=True)
 
         # job = JobSeeker.objects.filter(user=self.request.user, job=self.request.data['job'], applied=True, saved=True)
@@ -81,7 +88,10 @@ class UserAppliedJobViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
 
     def list(self, request, *args, **kwargs):
-        user = User.objects.get(id=request.user.id)
+        try:
+            user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return Response({"DOES_NOT_EXIST": "User Does not exist"}, status=400)
         queryset = self.queryset.filter(user=user, applied=True).order_by('-date')
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -93,7 +103,10 @@ class UserSavedJobViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
 
     def list(self, request, *args, **kwargs):
-        user = User.objects.get(id=request.user.id)
+        try:
+            user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return Response({"DOES_NOT_EXIST": "User Does not exist"}, status=400)
         queryset = self.queryset.filter(user=user, applied=False, saved=True).order_by('-date')
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
@@ -111,7 +124,10 @@ class ViewHireUserViewSet(viewsets.ReadOnlyModelViewSet):
     permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
 
     def list(self, request, *args, **kwargs):
-        user = User.objects.get(id=request.user.id)
+        try:
+            user = User.objects.get(id=request.user.id)
+        except ObjectDoesNotExist:
+            return Response({"DOES_NOT_EXIST": "User Does not exist"}, status=400)
         queryset = self.queryset.filter(user=user)
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
