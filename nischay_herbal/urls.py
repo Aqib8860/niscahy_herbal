@@ -22,9 +22,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('rest-auth/', include('rest_auth.urls')),
     path('rest-auth/registration/', include('rest_auth.registration.urls')),
-    # path('api/', include(router.urls), name='api'),
+    path('api/password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     path('job/', include('job.urls'), name='job'),
     path('digital-profile/', include('digitalprofile.urls'), name='digital-profile'),
+    path('digital-facilities/', include('digitalfacilities.urls'), name='digital-facilities'),
 
 ]
 
