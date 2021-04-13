@@ -28,7 +28,7 @@ SECRET_KEY = 'pdwx9@per_387t41sjrk90027=&64z1825y^zwy@4$mmrjbku*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'nischay-herbal.herokuapp.com', ]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
