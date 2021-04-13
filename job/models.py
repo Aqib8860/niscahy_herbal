@@ -39,20 +39,20 @@ STATUS = (
 
 
 class JobRecruiter(models.Model):
-    user = models.ForeignKey('core.User', on_delete=models.PROTECT, null=True)
-    company_name = models.CharField(max_length=80, null=True)
-    job_title = models.CharField(max_length=80, null=True)
-    location = models.CharField(max_length=50, null=True)
-    your_name = models.CharField(max_length=50, null=True)
-    phone = models.CharField(max_length=12, null=True)
-    industry = models.CharField(max_length=80, null=True, choices=INDUSTRY)
-    experience = models.CharField(max_length=20, null=True)
-    salary_from = models.CharField(max_length=20, null=True)
-    salary_to = models.CharField(max_length=20, null=True)
+    user = models.ForeignKey('core.User', on_delete=models.PROTECT)
+    company_name = models.CharField(max_length=80)
+    job_title = models.CharField(max_length=80)
+    location = models.CharField(max_length=50)
+    your_name = models.CharField(max_length=50)
+    phone = models.CharField(max_length=12)
+    industry = models.CharField(max_length=80, choices=INDUSTRY)
+    experience = models.CharField(max_length=20)
+    salary_from = models.CharField(max_length=20)
+    salary_to = models.CharField(max_length=20)
     date = models.DateField(auto_now_add=True)
     approved = models.BooleanField(default=False)
-    description = models.TextField(null=True)
-    requirements = models.TextField(null=True)
+    description = models.TextField()
+    requirements = models.TextField()
     active = models.BooleanField(default=True)
 
     def __str__(self):
@@ -60,19 +60,13 @@ class JobRecruiter(models.Model):
 
 
 class JobSeeker(models.Model):
-    user = models.ForeignKey('core.User', on_delete=models.PROTECT, null=True)
-    resume = models.FileField(null=True, blank=True, upload_to="Job/Resume/")
-    job = models.ForeignKey('job.JobRecruiter', on_delete=models.PROTECT, null=True)
+    user = models.ForeignKey('core.User', on_delete=models.PROTECT)
+    resume = models.FileField(upload_to="Job/Resume/")
+    job = models.ForeignKey('job.JobRecruiter', on_delete=models.PROTECT)
     date = models.DateField(auto_now_add=True)
     saved = models.BooleanField(default=False)
     applied = models.BooleanField(default=False)
-    status = models.CharField(max_length=50, null=True, choices=STATUS, default="Applied")
-    extra_field = models.CharField(max_length=200, null=True, blank=True)
+    status = models.CharField(max_length=50, choices=STATUS, default="Applied")
 
     def __str__(self):
         return str(self.user)
-
-    """@property
-    def resume_url(self):
-        if self.resume and hasattr(self.resume, 'url'):
-            return self.resume.url"""
