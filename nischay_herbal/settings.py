@@ -26,7 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'pdwx9@per_387t41sjrk90027=&64z1825y^zwy@4$mmrjbku*'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['nischay-herbal.herokuapp.com', 'herokuapp.com']
 
