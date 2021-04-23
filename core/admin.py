@@ -9,11 +9,11 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ['id', 'name', 'email', 'is_admin', 'is_customer', 'is_superuser', 'subscribed']
 
     def has_delete_permission(self, request, obj=None):
-        return False
+        return True
 
     def has_add_permission(self, request, obj=None):
-        return False
+        return True
 
     def has_change_permission(self, request, obj=None):
-        return False
+        return True
 
