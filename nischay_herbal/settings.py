@@ -194,7 +194,7 @@ REST_FRAMEWORK = {
     #     'rest_framework.renderers.JSONRenderer',
     # ],
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAuthenticated',
+        #'rest_framework.permissions.IsAuthenticated',
     ],
     "DATE_INPUT_FORMAT": "%Y-%m-%d",
     'DATETIME_INPUT_FORMAT': '%Y-%m-%d %H:%M',
