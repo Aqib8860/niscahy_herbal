@@ -33,9 +33,9 @@ class JobDetailSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class JobRecruiterSerializer(serializers.HyperlinkedModelSerializer):
+class JobRecruiterSerializer(serializers.ModelSerializer):
     id = serializers.ReadOnlyField()
-    user = serializers.ReadOnlyField(source='user.username')
+    # user = serializers.ReadOnlyField(source='user.username')
     url = serializers.HyperlinkedIdentityField(view_name="job:editviewjobdetail-detail")  # CALL JOB DETAIL ROUTER
     active = serializers.ReadOnlyField()
     approved = serializers.ReadOnlyField()
