@@ -48,7 +48,7 @@ class JobRecruiterViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def perform_create(self, serializer, *args, **kwargs):
-        serializer.save(user="Vishal") # CHANGE FOR FRONTEND ORIGINAL (user=self.request.user)
+        serializer.save() # CHANGE FOR FRONTEND ORIGINAL (user=self.request.user)
 
 
 class JobSeekerViewSet(viewsets.ModelViewSet):
