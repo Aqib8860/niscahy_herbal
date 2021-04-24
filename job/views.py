@@ -78,7 +78,7 @@ class JobSeekerViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer.save(user=self.request.user))
+            self.perform_create(serializer.save(user="vishal"))# CHANGE FIELD FOR FRONTEND ORIGINAL (user=self.request.user)
             return Response({"msg": "Successfully Applied"}, status=200)
 
 
