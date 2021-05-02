@@ -21,7 +21,7 @@ class AllJobViewSet(viewsets.ReadOnlyModelViewSet):
     # permission_classes = [permissions.IsAuthenticated, SubscribedUser]
 
     def retrieve(self, request, *args, **kwargs):
-        queryset = self.queryset.filter(approved=True).order_by('-date')
+        queryset = self.queryset.filter(approved=True).order_by('date')
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
