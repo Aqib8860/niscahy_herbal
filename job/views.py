@@ -18,7 +18,7 @@ from django.db import IntegrityError
 class AllJobViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = JobRecruiter.objects.all()
     serializer_class = AllJobsSerializer
-    # permission_classes = [permissions.IsAuthenticated, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticated, SubscribedUser]
 
     def retrieve(self, request, *args, **kwargs):
         queryset = self.queryset.filter(approved=True).order_by('date')
@@ -29,13 +29,13 @@ class AllJobViewSet(viewsets.ReadOnlyModelViewSet):
 class JobDetailedViewSet(viewsets.ModelViewSet):
     queryset = JobRecruiter.objects.all()
     serializer_class = JobDetailSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
 
 
 class JobRecruiterViewSet(viewsets.ModelViewSet):
     queryset = JobRecruiter.objects.all()
     serializer_class = JobRecruiterSerializer
-    # permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticatedOrReadOnly, IsOwner, SubscribedUser]
 
     def list(self, request, *args, **kwargs):
         try:
@@ -48,13 +48,13 @@ class JobRecruiterViewSet(viewsets.ModelViewSet):
         return Response(serializer.data)
 
     def perform_create(self, serializer, *args, **kwargs):
-        serializer.save() # CHANGE FOR FRONTEND ORIGINAL (user=self.request.user)
+        serializer.save(user=self.request.user) # CHANGE FOR FRONTEND ORIGINAL (user=self.request.user)
 
 
 class JobSeekerViewSet(viewsets.ModelViewSet):
     queryset = JobSeeker.objects.all()
     serializer_class = JobSeekerSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
     search_fields = ['applied', 'date']
     filter_backends = [SearchFilter, DjangoFilterBackend]
     filterset_class = ViewJobFilter
@@ -78,14 +78,14 @@ class JobSeekerViewSet(viewsets.ModelViewSet):
         else:
             serializer = self.get_serializer(data=request.data)
             serializer.is_valid(raise_exception=True)
-            self.perform_create(serializer.save(user="vishal"))# CHANGE FIELD FOR FRONTEND ORIGINAL (user=self.request.user)
+            self.perform_create(serializer.save(user=self.request.user))# CHANGE FIELD FOR FRONTEND ORIGINAL (user=self.request.user)
             return Response({"msg": "Successfully Applied"}, status=200)
 
 
 class UserAppliedJobViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = JobSeeker.objects.all()
     serializer_class = UserAppliedJobSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
 
     def list(self, request, *args, **kwargs):
         try:
@@ -100,7 +100,7 @@ class UserAppliedJobViewSet(viewsets.ReadOnlyModelViewSet):
 class UserSavedJobViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = JobSeeker.objects.all()
     serializer_class = UserAppliedJobSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
 
     def list(self, request, *args, **kwargs):
         try:
@@ -121,7 +121,7 @@ class AllJobApplicationsViewSet(viewsets.ReadOnlyModelViewSet):
 class ViewHireUserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = JobRecruiter.objects.all()
     serializer_class = ViewHireUserSerializer
-    # permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticated, IsOwner, SubscribedUser]
 
     def list(self, request, *args, **kwargs):
         try:
@@ -136,7 +136,7 @@ class ViewHireUserViewSet(viewsets.ReadOnlyModelViewSet):
 class ViewJobApplicationAPI(generics.RetrieveAPIView):
     queryset = JobSeeker.objects.all()
     serializer_class = ViewJobApplicationsSerializer
-    # permission_classes = [permissions.IsAuthenticated, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticated, SubscribedUser]
     lookup_field = ['id']
 
     def retrieve(self, request, *args, **kwargs):
@@ -154,7 +154,7 @@ class ViewJobApplicationAPI(generics.RetrieveAPIView):
 class UpdateJobApplicationAPI(generics.RetrieveUpdateAPIView):
     queryset = JobSeeker.objects.all()
     serializer_class = UpdateJobApplicationSerializer
-    # permission_classes = [permissions.IsAuthenticated, SubscribedUser]
+    permission_classes = [permissions.IsAuthenticated, SubscribedUser]
     lookup_field = ['id']
 
     def retrieve(self, request, *args, **kwargs):
