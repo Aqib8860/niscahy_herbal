@@ -151,13 +151,13 @@ MEDIA_URL = '/media/'
 
 # Local Server
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+"""STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'"""
 
 # FOR CLOUDINARY
-"""DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATICFILES_ROOT = os.path.join(BASE_DIR, 'staticfiles')
@@ -169,7 +169,7 @@ CLOUDINARY_STORAGE= {
 }
 CLOUDINARY = {
     'max_length': 200,
-}"""
+}
 
 SITE_ID = 1
 AUTH_USER_MODEL = 'core.User'
